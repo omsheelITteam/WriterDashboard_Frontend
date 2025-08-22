@@ -147,10 +147,10 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import profileDefault from "../assets/profileDefault.png";
-import news from "../assets/news.png";
+import news from "../assets/News.png";
 import { AiFillDashboard, AiOutlineMenu } from "react-icons/ai";
 import { ImProfile } from "react-icons/im";
 import { BiNews } from "react-icons/bi";
@@ -160,12 +160,13 @@ import { MdOutlineSettings } from "react-icons/md";
 
 import axios from 'axios';
 import toast from "react-hot-toast";
+import { AppContext } from '../Context/AppContext';
 
 const Sidebar = () => {
   const { pathname, search } = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
-
+const {backendUrl}=useContext(AppContext)
   // Check if this is a shared view
   const urlParams = new URLSearchParams(search);
   const isSharedView = urlParams.get('shared') === 'true';
@@ -177,7 +178,7 @@ const Sidebar = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:4000/api/auth/logoutWriter", {}, { withCredentials: true });
+      await axios.post(`${backendUrl}/api/auth/logoutWriter`, {}, { withCredentials: true });
       toast.success("Logged out successfully");
       localStorage.removeItem("newToken");
       setSidebarOpen(false);
