@@ -69,7 +69,7 @@ axios.defaults.withCredentials=true
 
       if (data.success) {
         toast.success(data.message);
-        navigate("/");
+        navigate("/login");
       } else {
         toast.error(data.message);
       }
